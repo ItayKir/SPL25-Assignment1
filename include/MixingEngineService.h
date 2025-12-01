@@ -60,6 +60,14 @@ public:
         bpm_tolerance = tolerance;
     }
 
+    bool isDeckEmpty() const{
+        return (decks[0]==nullptr && decks[1]==nullptr);
+    }
+
+    size_t getInactiveDeck(){
+        return (active_deck + 1) % 2; // 1->0 or 0->1
+    }
+
 };
 
 #endif // MIXINGENGINESERVICE_H
