@@ -66,6 +66,20 @@ public:
      */
     AudioTrack& operator=(AudioTrack&& other) noexcept;
 
+    // ========= Helper Functions (itay) ========== //
+
+    /**
+     * Helper function
+     */
+    void track_preparation(){
+        load();
+        analyze_beatgrid();
+    }
+
+    void set_bpm(int new_bpm){
+        bpm = new_bpm;
+    }
+
     // ========== VIRTUAL FUNCTIONS FOR POLYMORPHISM ==========
 
     /**
