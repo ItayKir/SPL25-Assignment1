@@ -16,6 +16,9 @@ public:
     DJLibraryService(const Playlist& playlist);
     DJLibraryService(): playlist(), library(){}
 
+    ~DJLibraryService();
+
+
     /**
      * @brief Build the track library from parsed config data
      * @param library_tracks Vector of track info from config
@@ -48,6 +51,18 @@ public:
      * @return A vector of strings containing the track titles.
      */
     std::vector<std::string> getTrackTitles() const;
+
+    /** 
+     * @brief Helper function, creates MP3 tracks
+     * 
+    */
+    void DJLibraryService::create_mp3_track(SessionConfig::TrackInfo track);
+
+    /** 
+     * @brief Helper function, creates WAV tracks
+     * 
+    */
+    void DJLibraryService::create_wav_track(SessionConfig::TrackInfo track);
 
 private:
     Playlist playlist;
