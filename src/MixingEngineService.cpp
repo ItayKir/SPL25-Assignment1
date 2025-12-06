@@ -42,13 +42,6 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
         return -1;
     }
 
-    AudioTrack* ptr = wrapped_ptr.release();
-    
-    if(isDeckEmpty()){ //initial state + first track
-        decks[0] = ptr;
-        active_deck = 0;
-    }
-
     size_t target_deck_index = getInactiveDeck();
     std::cout << "[Deck Switch] Target deck " << target_deck_index << std::endl;
 
@@ -56,14 +49,26 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
         delete decks[target_deck_index];
         decks[target_deck_index] = nullptr;
     }
-    ptr -> track_preparation(); //load and analyze_beatgrid
-    if(auto_sync){
-        int active_deck_track_bpm = decks[active_deck] -> get_bpm();
-        int current_track_bpm = ptr -> get_bpm();
-        if(can_mix_tracks(ptr))
+
+    wrapped_ptr -> track_preparation(); //load and analyze_beatgrid
+
+    if(!isDeckEmpty() && auto_sync && !can_mix_tracks(wrapped_ptr)){
+        sync_bpm(wrapped_ptr);
     }
 
-    return -1; // Placeholder
+    decks[target_deck_index] = wrapped_ptr.release();
+    std::cout << "[Load Complete] \"" << decks[target_deck_index] -> get_title() << "\" is now loaded on deck "<< target_deck_index << std::endl;
+
+    if(active_deck != target_deck_index){ //Can be equal only when when decks[active_deck] was also empty and getInactiveDeck() will return active_deck
+        std::cout << "[Unload] Unloading previous deck "<< active_deck << " ("<< decks[active_deck] -> get_title() <<")" << std::endl;
+        delete decks[active_deck];
+        decks[active_deck] = nullptr;
+
+        active_deck = target_deck_index; //If they were equal, we will not do a switch, so nothing to change and no need to print.
+        std::cout << "[Active Deck] Switched to deck "<< target_deck_index << std::endl;
+    }
+
+    return target_deck_index; 
 }
 
 /**
@@ -109,5 +114,13 @@ bool MixingEngineService::can_mix_tracks(const PointerWrapper<AudioTrack>& track
  * @param track: Track to synchronize with active deck
  */
 void MixingEngineService::sync_bpm(const PointerWrapper<AudioTrack>& track) const {
-    // Your implementation here
+    if(isDeckEmpty() || !track){ //decks[active_deck] is the same as the deck being empty...
+        return;
+    }
+
+    int original_bpm = track -> get_bpm();
+    int avg_bpm = (original_bpm + decks[active_deck] -> get_bpm()) / 2; //this can return a decimal value but because bpm is int, it should not matter
+
+    track -> set_bpm(avg_bpm);
+    std::cout << "[Sync BPM] Syncing BPM from "<< original_bpm <<" to "<< avg_bpm<< std::endl;
 }

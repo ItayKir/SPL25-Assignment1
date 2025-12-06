@@ -60,11 +60,20 @@ public:
         bpm_tolerance = tolerance;
     }
 
+    /**
+     * @brief Returns true if deck is empty. Meaning both pointers point to nullptr.
+     */
     bool isDeckEmpty() const{
         return (decks[0]==nullptr && decks[1]==nullptr);
     }
 
-    size_t getInactiveDeck(){
+    /** 
+    * @brief Returns the deck which is NOT active.
+    */
+    size_t getInactiveDeck(){ 
+        if(isDeckEmpty){ //If deck is empty, both decks are "incative".
+            return active_deck;
+        }
         return (active_deck + 1) % 2; // 1->0 or 0->1
     }
 
