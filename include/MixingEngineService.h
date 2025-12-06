@@ -71,7 +71,7 @@ public:
     * @brief Returns the deck which is NOT active.
     */
     size_t getInactiveDeck(){ 
-        if(isDeckEmpty){ //If deck is empty, both decks are "incative".
+        if(isDeckEmpty()){ //If deck is empty, both decks are "incative".
             return active_deck;
         }
         return (active_deck + 1) % 2; // 1->0 or 0->1

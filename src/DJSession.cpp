@@ -160,7 +160,7 @@ void DJSession::simulate_dj_performance() {
     std::cout << "\n--- Processing Tracks ---" << std::endl;
 
     if(play_all){
-        for(const auto playlist: session_config.playlists){
+        for(const auto& playlist: session_config.playlists){
             simulate_dj_performance_playlist(playlist.first);
         }
     }
@@ -177,11 +177,11 @@ void DJSession::simulate_dj_performance() {
 }
 
 
-bool DJSession::simulate_dj_performance_playlist(const std::string playlist_name){
+void DJSession::simulate_dj_performance_playlist(const std::string playlist_name){
 
     bool response = load_playlist(playlist_name);
     if(!response){
-        return false;
+        return;
     }
 
     for(std::string track_title: track_titles){

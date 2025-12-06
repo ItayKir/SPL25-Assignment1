@@ -56,13 +56,13 @@ public:
      * @brief Helper function, creates MP3 tracks
      * 
     */
-    void DJLibraryService::create_mp3_track(SessionConfig::TrackInfo track);
+    void create_mp3_track(SessionConfig::TrackInfo track);
 
     /** 
      * @brief Helper function, creates WAV tracks
      * 
     */
-    void DJLibraryService::create_wav_track(SessionConfig::TrackInfo track);
+    void create_wav_track(SessionConfig::TrackInfo track);
 
 private:
     Playlist playlist;

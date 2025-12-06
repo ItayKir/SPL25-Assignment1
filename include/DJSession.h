@@ -99,7 +99,7 @@ public:
      * Helper function that gets playlist and does everying in page 28 section c.
      * Returns: True if succesful, false if failed.
      */
-    bool DJSession::simulate_dj_performance_playlist(const std::string playlist);
+    void simulate_dj_performance_playlist(const std::string playlist);
 
     // ========== STATUS & DISPLAY METHODS ==========
 
