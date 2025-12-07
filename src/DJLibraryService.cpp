@@ -114,15 +114,13 @@ std::vector<std::string> DJLibraryService::getTrackTitles() const {
 
 
 void DJLibraryService::create_mp3_track(SessionConfig::TrackInfo track){
-    MP3Track mp3_track = MP3Track(track.title, track.artists,track.duration_seconds, track.bpm, track.extra_param1, track.extra_param2);
-    AudioTrack* mp3_track_pointer = &mp3_track;
+    AudioTrack* mp3_track_pointer = new MP3Track(track.title, track.artists,track.duration_seconds, track.bpm, track.extra_param1, track.extra_param2);
     library.push_back(mp3_track_pointer);
-    std::cout << "MP3Track created: "<< mp3_track.get_bitrate() << " kbps"<< std::endl;
+    std::cout << "MP3Track created: "<< track.extra_param1 << " kbps"<< std::endl;
 }
 
 void DJLibraryService::create_wav_track(SessionConfig::TrackInfo track){
-    WAVTrack wav_track = WAVTrack(track.title, track.artists,track.duration_seconds, track.bpm, track.extra_param1, track.extra_param2);
-    AudioTrack* wav_track_pointer = &wav_track;
+    AudioTrack* wav_track_pointer = new WAVTrack(track.title, track.artists,track.duration_seconds, track.bpm, track.extra_param1, track.extra_param2);
     library.push_back(wav_track_pointer);
-    std::cout << "WAVTrack created: "<< wav_track.get_sample_rate() << "Hz/"<< wav_track.get_bit_depth() <<"bit"<< std::endl;
+    std::cout << "WAVTrack created: "<< track.extra_param1 << "Hz/"<< track.extra_param2 <<"bit"<< std::endl;
 }
