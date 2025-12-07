@@ -29,6 +29,7 @@ int DJControllerService::loadTrackToCache(AudioTrack& track) {
     if(resp){ //evicted
         return -1;
     }
+    //displayCacheStatus();
     return 0; //resp retruedn false, no tracks evicted when putting a new track in cache
 }
 

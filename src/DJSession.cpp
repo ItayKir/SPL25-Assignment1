@@ -80,9 +80,10 @@ int DJSession::load_track_to_controller(const std::string& track_name) {
         return 0;
     }
 
-    std::cout<< "[System] Loading track " << track_name << " to controller..."<<std::endl;
+    std::cout<< "[System] Loading track '" << track_name << "' to controller..."<<std::endl;
 
     int response = controller_service.loadTrackToCache(*track_ptr);
+    controller_service.displayCacheStatus();
     if(response == 1){
         stats.cache_hits++;
     }
@@ -114,12 +115,13 @@ bool DJSession::load_track_to_mixer_deck(const std::string& track_title) {
     }
 
     int response = mixing_service.loadTrackToDeck(*track_ptr);
+    mixing_service.displayDeckStatus();
 
-    if(response == 1){
+    if(response == 0){
         stats.deck_loads_a++;
         stats.transitions++;
     }
-    if(response == 0){
+    if(response == 1){
         stats.deck_loads_b++;
         stats.transitions++;
     }
@@ -184,8 +186,9 @@ void DJSession::simulate_dj_performance_playlist(const std::string playlist_name
         return;
     }
 
+    std::reverse(track_titles.begin(), track_titles.end());
     for(std::string track_title: track_titles){
-        std::cout << "\n-- Processing: "<< track_title <<" --" << std::endl;
+        std::cout << "\n--- Processing: "<< track_title <<" ---" << std::endl;
         stats.tracks_processed++;
 
         load_track_to_controller(track_title);
@@ -193,14 +196,14 @@ void DJSession::simulate_dj_performance_playlist(const std::string playlist_name
     }
 
     print_session_summary();
-    stats.tracks_processed = 0;
-    stats.cache_hits = 0;
-    stats.cache_misses = 0;
-    stats.cache_evictions = 0;
-    stats.deck_loads_a = 0;
-    stats.deck_loads_b = 0;
-    stats.transitions = 0;
-    stats.errors = 0;
+    // stats.tracks_processed = 0;
+    // stats.cache_hits = 0;
+    // stats.cache_misses = 0;
+    // stats.cache_evictions = 0;
+    // stats.deck_loads_a = 0;
+    // stats.deck_loads_b = 0;
+    // stats.transitions = 0;
+    // stats.errors = 0;
 }
 
 /* 
