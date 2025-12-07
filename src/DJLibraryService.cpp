@@ -31,8 +31,8 @@ void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>&
         if(track.type == "WAV"){
             create_wav_track(track);        
         }
-        std::cout << "[INFO] Track library built: "<< library.size() <<" tracks loaded" << std::endl;
     }
+    std::cout << "[INFO] Track library built: "<< library.size() <<" tracks loaded" << std::endl;
 }
 
 /**
@@ -93,7 +93,7 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
         
         track_ptr -> track_preparation();
         playlist.add_track(track_ptr);
-        std::cout<< "Added \"" << track_ptr -> get_title() << "\" to playlist \""<< playlist_name <<"\""<<std::endl;
+        // std::cout<< "Added \"" << track_ptr -> get_title() << "\" to playlist \""<< playlist_name <<"\""<<std::endl;
     }
     std::cout<< "[INFO] Playlist loaded: "<< playlist_name <<" ("<< playlist.get_track_count() <<" tracks)"<<std::endl;
 }
@@ -116,11 +116,11 @@ std::vector<std::string> DJLibraryService::getTrackTitles() const {
 void DJLibraryService::create_mp3_track(SessionConfig::TrackInfo track){
     AudioTrack* mp3_track_pointer = new MP3Track(track.title, track.artists,track.duration_seconds, track.bpm, track.extra_param1, track.extra_param2);
     library.push_back(mp3_track_pointer);
-    std::cout << "MP3Track created: "<< track.extra_param1 << " kbps"<< std::endl;
+    // std::cout << "MP3Track created: "<< track.extra_param1 << " kbps"<< std::endl;
 }
 
 void DJLibraryService::create_wav_track(SessionConfig::TrackInfo track){
     AudioTrack* wav_track_pointer = new WAVTrack(track.title, track.artists,track.duration_seconds, track.bpm, track.extra_param1, track.extra_param2);
     library.push_back(wav_track_pointer);
-    std::cout << "WAVTrack created: "<< track.extra_param1 << "Hz/"<< track.extra_param2 <<"bit"<< std::endl;
+    // std::cout << "WAVTrack created: "<< track.extra_param1 << "Hz/"<< track.extra_param2 <<"bit"<< std::endl;
 }

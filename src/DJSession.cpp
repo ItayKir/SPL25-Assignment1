@@ -185,7 +185,7 @@ void DJSession::simulate_dj_performance_playlist(const std::string playlist_name
     }
 
     for(std::string track_title: track_titles){
-        std::cout << "\n-- Processing: "<< track_title <<" --";
+        std::cout << "\n-- Processing: "<< track_title <<" --" << std::endl;
         stats.tracks_processed++;
 
         load_track_to_controller(track_title);
