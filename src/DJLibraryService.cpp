@@ -33,7 +33,6 @@ void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>&
         }
         std::cout << "[INFO] Track library built: "<< library.size() <<" tracks loaded" << std::endl;
     }
-    std::cout << "TODO: Implement DJLibraryService::buildLibrary method\n"<< library_tracks.size() << " tracks to be loaded into library.\n";
 }
 
 /**
@@ -79,7 +78,7 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
     // Your implementation here
     std::cout << "[INFO] Loading playlist: "<< playlist_name <<std::endl;
     playlist = Playlist(playlist_name);
-    for(int track_index: track_indices){
+    for(size_t track_index: track_indices){
         if(track_index < 1 ||track_index > library.size()){
             std::cout << "[WARNING] Invalid track index: "<< track_index <<std::endl;
             continue;
@@ -97,10 +96,6 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
         std::cout<< "Added \"" << track_ptr -> get_title() << "\" to playlist \""<< playlist_name <<"\""<<std::endl;
     }
     std::cout<< "[INFO] Playlist loaded: "<< playlist_name <<" ("<< playlist.get_track_count() <<" tracks)"<<std::endl;
-
-    // For now, add a placeholder to fix the linker error
-    (void)playlist_name;  // Suppress unused parameter warning
-    (void)track_indices;  // Suppress unused parameter warning
 }
 /**
  * TODO: Implement getTrackTitles method

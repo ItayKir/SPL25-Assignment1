@@ -188,8 +188,8 @@ void DJSession::simulate_dj_performance_playlist(const std::string playlist_name
         std::cout << "\n-- Processing: "<< track_title <<" --";
         stats.tracks_processed++;
 
-        int controller_response = load_track_to_controller(track_title);
-        bool mixer_deck_response =load_track_to_mixer_deck(track_title);
+        load_track_to_controller(track_title);
+        load_track_to_mixer_deck(track_title);
     }
 
     print_session_summary();

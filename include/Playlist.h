@@ -40,6 +40,15 @@ public:
      */
     ~Playlist();
 
+
+    Playlist(const Playlist&);
+    Playlist& operator=(const Playlist&);
+
+    Playlist(Playlist&&) noexcept;
+    Playlist& operator=(Playlist&&) noexcept;
+
+    void clear_playlist();
+
     /**
      * Add a track to the playlist
      * @param track Pointer to AudioTrack to add

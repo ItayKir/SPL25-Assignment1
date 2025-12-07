@@ -12,12 +12,87 @@ Playlist::~Playlist() {
     #ifdef DEBUG
     std::cout << "Destroying playlist: " << playlist_name << std::endl;
     #endif 
+    clear_playlist();
+}
+
+void Playlist::clear_playlist(){
     PlaylistNode* current_node = head;
     while(current_node != nullptr){
         PlaylistNode* next_node = current_node -> next;
         delete current_node;
         current_node = next_node;
     }
+    head=nullptr;
+    track_count=0;
+}
+
+Playlist::Playlist(Playlist&& other) noexcept 
+    : head(other.head), playlist_name(std::move(other.playlist_name)), track_count(other.track_count) {
+    other.head = nullptr;
+    other.track_count=0;
+}
+
+Playlist& Playlist::operator=(Playlist&& other) noexcept {
+    if (this == &other) {
+        return *this; 
+    }
+    clear_playlist();
+
+    head = other.head;
+    playlist_name = std::move(other.playlist_name);
+
+    other.head = nullptr;
+
+    return *this;
+}
+
+Playlist::Playlist(const Playlist& other)
+    :head(nullptr), playlist_name(other.playlist_name), track_count(0)
+    {
+        if(other.head == nullptr){
+            return;
+        }
+        head = new PlaylistNode(other.head->track);
+        track_count++;
+
+        PlaylistNode* other_next_node = other.head->next;
+        PlaylistNode* this_curr_node = head;
+
+        while (other_next_node != nullptr) {
+            this_curr_node->next = new PlaylistNode(other_next_node->track);
+            
+            this_curr_node = this_curr_node->next;
+            other_next_node = other_next_node->next;
+            track_count++;
+        }
+
+    }
+
+
+Playlist& Playlist::operator=(const Playlist& other) {
+    if (this == &other) {
+        return *this; // Self-assignment check
+    }
+    clear_playlist(); 
+    playlist_name = other.playlist_name;
+    
+    if (other.head == nullptr) {
+        return *this;
+    }
+
+    head = new PlaylistNode(other.head->track);
+    track_count++;
+
+    PlaylistNode* other_next_node = other.head->next;
+    PlaylistNode* this_curr_node = head;
+
+    while (other_next_node != nullptr) {
+        this_curr_node->next = new PlaylistNode(other_next_node->track);
+        this_curr_node = this_curr_node->next;
+        other_next_node = other_next_node->next;
+        track_count++;
+    }
+    return *this;
 }
 
 void Playlist::add_track(AudioTrack* track) {
