@@ -52,14 +52,14 @@ Playlist::Playlist(const Playlist& other)
         if(other.head == nullptr){
             return;
         }
-        head = new PlaylistNode(other.head->track);
+        head = new PlaylistNode(other.head->track -> clone().release());
         track_count++;
 
         PlaylistNode* other_next_node = other.head->next;
         PlaylistNode* this_curr_node = head;
 
         while (other_next_node != nullptr) {
-            this_curr_node->next = new PlaylistNode(other_next_node->track);
+            this_curr_node->next = new PlaylistNode(other_next_node->track -> clone().release());
             
             this_curr_node = this_curr_node->next;
             other_next_node = other_next_node->next;
@@ -80,14 +80,14 @@ Playlist& Playlist::operator=(const Playlist& other) {
         return *this;
     }
 
-    head = new PlaylistNode(other.head->track);
+    head = new PlaylistNode(other.head->track -> clone().release());
     track_count++;
 
     PlaylistNode* other_next_node = other.head->next;
     PlaylistNode* this_curr_node = head;
 
     while (other_next_node != nullptr) {
-        this_curr_node->next = new PlaylistNode(other_next_node->track);
+        this_curr_node->next = new PlaylistNode(other_next_node->track -> clone().release());
         this_curr_node = this_curr_node->next;
         other_next_node = other_next_node->next;
         track_count++;

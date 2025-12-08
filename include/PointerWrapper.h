@@ -143,7 +143,7 @@ public:
      * What should happen to the old pointer?
      */
     void reset(T* new_ptr = nullptr) {
-        std::cout << "Reset called for pointer: "<< new_ptr << std::endl;
+        // std::cout << "Reset called for pointer: "<< new_ptr << std::endl;
         if(ptr == new_ptr){
             return;
         }
