@@ -23,8 +23,8 @@ bool LRUCache::put(PointerWrapper<AudioTrack> track) {
     }
 
     if(contains(track ->get_title())){ //if track already exists
-        slots[findSlot(track -> get_title())].access(access_counter);
         access_counter++;
+        slots[findSlot(track -> get_title())].access(access_counter);
         return false;
     }
     
@@ -35,8 +35,8 @@ bool LRUCache::put(PointerWrapper<AudioTrack> track) {
         is_evicted = true;
     }
     // Need to clone here
-    slots[findEmptySlot()].store(track -> clone(), access_counter);
     access_counter++;
+    slots[findEmptySlot()].store(track -> clone(), access_counter);
     return is_evicted;
     
 }

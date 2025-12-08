@@ -69,13 +69,16 @@ public:
     // ========= Helper Functions (itay) ========== //
 
     /**
-     * Helper function
+     * @brief Helper function for clarity when going over the code.
      */
     void track_preparation(){
         load();
         analyze_beatgrid();
     }
 
+    /**
+     * @brief sets new_bpm to be the bpm of the track.
+     */
     void set_bpm(int new_bpm){
         bpm = new_bpm;
     }

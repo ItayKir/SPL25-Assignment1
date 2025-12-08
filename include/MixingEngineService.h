@@ -19,6 +19,9 @@ public:
     MixingEngineService();
     ~MixingEngineService();
 
+    MixingEngineService(const MixingEngineService&) = delete;
+    MixingEngineService& operator=(const MixingEngineService&) = delete;
+
     /** Contract: Load a track to the next deck per instant-transition policy
      * - @param track: reference to a cached track to be cloned for the mixer
      * - @return: index of the deck the track was loaded to (0 or 1), or -1 on failure.
@@ -60,11 +63,20 @@ public:
         bpm_tolerance = tolerance;
     }
 
+    /**
+     * @brief Returns true if deck is empty. Meaning both pointers point to nullptr.
+     */
     bool isDeckEmpty() const{
         return (decks[0]==nullptr && decks[1]==nullptr);
     }
 
-    size_t getInactiveDeck(){
+    /** 
+    * @brief Returns the deck which is NOT active.
+    */
+    size_t getInactiveDeck(){ 
+        // if(isDeckEmpty()){ //If deck is empty, both decks are "incative".
+        //     return active_deck;
+        // }
         return (active_deck + 1) % 2; // 1->0 or 0->1
     }
 
